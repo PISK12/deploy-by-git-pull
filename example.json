@@ -1,0 +1,13 @@
+{
+  "ssh": {
+    "username": "username",
+    "password": "password",
+    "host": "hostname",
+    "port": 22
+  },
+  "git": {
+    "username": "username",
+    "password": "password",
+    "workdir": "/root"
+  }
+}
