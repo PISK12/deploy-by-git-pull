@@ -54,9 +54,16 @@ func getSshClientConfig(cfg *config) *ssh.ClientConfig{
 				return answers, nil
 			}),
 		},
+		Config: ssh.Config{
+			KeyExchanges: []string{"diffie-hellman-group-exchange-sha256"},
+		},
 		// Non-production only
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
+}
+
+func usage() {
+	fmt.Println("Usage go-vhostd <config>")
 }
 
 func executeCommands(cfg *config,in io.WriteCloser)  {
@@ -74,7 +81,13 @@ func executeCommands(cfg *config,in io.WriteCloser)  {
 
 func main() {
 	log.Printf("Init")
-	cfg, err := readConfig("./config.json")
+
+	if len(os.Args) != 2 {
+		usage()
+		os.Exit(1)
+	}
+
+	cfg, err := readConfig(os.Args[1])
 
 
 	// SSH client config
